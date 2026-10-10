@@ -49,12 +49,8 @@ const LoginForm = () => {
     startTransition(async () => {
       try {
         const response = await loginUser(data);
-
-        if (!!response.error) {
-          toast("Event has been created", {
-            description: "Sunday, December 03, 2023 at 9:00 AM",
-
-          })
+        if (response.error) {
+          toast.error(response.error);
         } else {
           router.push('/dashboard/analytics');
           toast.success("Successfully logged in");
