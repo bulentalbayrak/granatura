@@ -185,13 +185,16 @@ const ProfileInfo = async () => {
                   "use server";
                   const supabase = await createClient();
                   await supabase.auth.signOut();
+                  const { redirect } = await import("next/navigation");
+                  redirect("/auth/login");
                 }}
               >
                 <button type="submit" className=" w-full  flex  items-center gap-2" >
                   <Icon icon="heroicons:power" className="w-4 h-4" />
                   Log out
                 </button>
-              </form>            </div>
+              </form>         
+ 	 </div>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
