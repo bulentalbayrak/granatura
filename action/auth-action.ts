@@ -1,7 +1,6 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
-import { redirect } from 'next/navigation'
 
 export const loginUser = async (data: { email: string; password: string }) => {
   const supabase = await createClient()
@@ -15,5 +14,5 @@ export const loginUser = async (data: { email: string; password: string }) => {
     return { error: error.message }
   }
 
-  redirect('/dashboard/analytics')
+  return { success: true }
 }
