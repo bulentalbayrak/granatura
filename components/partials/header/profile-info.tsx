@@ -13,12 +13,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Icon } from "@/components/ui/icon"
-import { signOut, auth } from "@/lib/auth";
+import { createClient } from '@/lib/supabase/server';
 import Image from "next/image";
 import { Link } from '@/i18n/routing';
 
 const ProfileInfo = async () => {
-  const session = await auth();
+
   return (
     <div className="md:block hidden">
       <DropdownMenu>
@@ -180,18 +180,18 @@ const ProfileInfo = async () => {
           >
 
             <div>
-              <form
+		<form
                 action={async () => {
                   "use server";
-                  await signOut();
+                  const supabase = await createClient();
+                  await supabase.auth.signOut();
                 }}
               >
                 <button type="submit" className=" w-full  flex  items-center gap-2" >
                   <Icon icon="heroicons:power" className="w-4 h-4" />
                   Log out
                 </button>
-              </form>
-            </div>
+              </form>            </div>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
