@@ -18,7 +18,7 @@ import Image from "next/image";
 import { Link } from '@/i18n/routing';
 
 const ProfileInfo = async () => {
-
+const session = { user: { name: "Admin", email: "admin@granatura.com", image: "/images/avatar/avatar-1.jpg" } };
   return (
     <div className="md:block hidden">
       <DropdownMenu>
