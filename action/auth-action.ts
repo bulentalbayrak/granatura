@@ -1,16 +1,19 @@
 'use server'
-import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
-import {signIn} from "@/lib/auth";
-export const loginUser = async (data: any) => {
-  try {
-    const response = await signIn("credentials", {
-      email: data.email,
-      password: data.password,
-      redirect: false,
-    });
-    return response;
-  } catch (error) {
-    throw new Error(error as string);
+
+import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
+
+export const loginUser = async (data: { email: string; password: string }) => {
+  const supabase = await createClient()
+
+  const { error } = await supabase.auth.signInWithPassword({
+    email: data.email,
+    password: data.password,
+  })
+
+  if (error) {
+    return { error: error.message }
   }
-};
+
+  redirect('/dashboard/analytics')
+}
