@@ -25,7 +25,22 @@ export default async function OrganizationsPage() {
           'use server'
           const supabase = await createClient()
           const name = formData.get('name') as string
-          const slug = formData.get('slug') as string || name.toLowerCase().replace(/\s+/g, '-')
+          let slug = (formData.get('slug') as string)?.trim()
+
+          if (!slug) {
+            slug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+          }
+
+          // Aynı slug varsa sonuna rastgele sayı ekle
+          const { data: existing } = await supabase
+            .from('organizations')
+            .select('id')
+            .eq('slug', slug)
+            .maybeSingle()
+
+          if (existing) {
+            slug = `${slug}-${Math.floor(Math.random() * 1000)}`
+          }
 
           const { error } = await supabase
             .from('organizations')
@@ -33,7 +48,11 @@ export default async function OrganizationsPage() {
 
           if (error) {
             console.error(error)
+            throw new Error(error.message)
           }
+
+          const { redirect } = await import('next/navigation')
+          redirect('/dashboard/organizations')
         }}>
           <div className="space-y-4">
             <div>
