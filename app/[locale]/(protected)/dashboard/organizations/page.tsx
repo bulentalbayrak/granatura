@@ -31,7 +31,6 @@ export default async function OrganizationsPage() {
             slug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
           }
 
-          // Aynı slug varsa sonuna rastgele sayı ekle
           const { data: existing } = await supabase
             .from('organizations')
             .select('id')
@@ -44,40 +43,59 @@ export default async function OrganizationsPage() {
 
           const { error } = await supabase
             .from('organizations')
-            .insert({ name, slug })
+            .insert({
+              name,
+              slug,
+              tax_office: formData.get('tax_office') as string || null,
+              tax_number: formData.get('tax_number') as string || null,
+              address: formData.get('address') as string || null,
+              phone: formData.get('phone') as string || null,
+              mersis_no: formData.get('mersis_no') as string || null,
+              email: formData.get('email') as string || null,
+            })
 
           if (error) {
             console.error(error)
             throw new Error(error.message)
           }
 
-	const { redirect } = await import('next/navigation')
-	redirect('/en/dashboard/organizations')
+          const { redirect } = await import('next/navigation')
+          redirect('/en/dashboard/organizations')
         }}>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-1">Müşteri Adı</label>
-              <input
-                name="name"
-                type="text"
-                required
-                className="w-full border rounded px-3 py-2"
-                placeholder="Örn: ABC Mobilya"
-              />
+              <input name="name" type="text" required className="w-full border rounded px-3 py-2" placeholder="Örn: ABC Mobilya" />
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Slug (opsiyonel)</label>
-              <input
-                name="slug"
-                type="text"
-                className="w-full border rounded px-3 py-2"
-                placeholder="abc-mobilya"
-              />
+              <input name="slug" type="text" className="w-full border rounded px-3 py-2" placeholder="abc-mobilya" />
             </div>
-            <button
-              type="submit"
-              className="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90"
-            >
+            <div>
+              <label className="block text-sm font-medium mb-1">Vergi Dairesi</label>
+              <input name="tax_office" type="text" className="w-full border rounded px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Vergi Numarası</label>
+              <input name="tax_number" type="text" maxLength={10} className="w-full border rounded px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Adres</label>
+              <textarea name="address" className="w-full border rounded px-3 py-2" rows={3} />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Telefon</label>
+              <input name="phone" type="text" className="w-full border rounded px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">MERSİS No</label>
+              <input name="mersis_no" type="text" className="w-full border rounded px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">E-posta</label>
+              <input name="email" type="email" className="w-full border rounded px-3 py-2" />
+            </div>
+            <button type="submit" className="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90">
               Müşteri Ekle
             </button>
           </div>
