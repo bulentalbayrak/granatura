@@ -1269,6 +1269,13 @@ export function getHorizontalMenuList(pathname: string, t: any): Group[] {
               icon: "heroicons:credit-card",
               children: [],
             },
+	    {
+              href: "/dashboard/organizations",
+              label: "Organizations",
+              active: pathname === "/dashboard/organizations",
+              icon: "heroicons:building-office",
+              children: [],
+            },
           ],
         },
       ],
