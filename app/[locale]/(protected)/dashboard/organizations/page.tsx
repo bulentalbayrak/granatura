@@ -51,8 +51,8 @@ export default async function OrganizationsPage() {
             throw new Error(error.message)
           }
 
-          const { redirect } = await import('next/navigation')
-          redirect('/dashboard/organizations')
+	const { redirect } = await import('next/navigation')
+	redirect('/en/dashboard/organizations')
         }}>
           <div className="space-y-4">
             <div>
