@@ -79,6 +79,9 @@ export default async function OrganizationsPage() {
                 required
                 className="w-full border rounded px-3 py-2"
                 placeholder="1001"
+		onInput={(e) => {
+                  e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '').slice(0, 4)
+                }}
               />
             </div>
             <div>
