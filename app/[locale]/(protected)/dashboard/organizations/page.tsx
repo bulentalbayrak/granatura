@@ -71,10 +71,12 @@ export default async function OrganizationsPage() {
             <div>
               <label className="block text-sm font-medium mb-1">Kod (4 haneli)</label>
               <input
-                name="code"
-                type="number"
-                min="1000"
-                max="9999"
+		name="code"
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]{4}"
+                maxLength={4}
+                required
                 className="w-full border rounded px-3 py-2"
                 placeholder="1001"
               />
