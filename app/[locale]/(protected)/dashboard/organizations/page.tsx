@@ -46,7 +46,7 @@ export default async function OrganizationsPage() {
             .insert({
               name,
               slug,
-	      code: formData.get('code') ? parseInt(formData.get('code') as string) : null,
+              code: formData.get('code') ? parseInt(formData.get('code') as string) : null,
               tax_office: formData.get('tax_office') as string || null,
               tax_number: formData.get('tax_number') as string || null,
               address: formData.get('address') as string || null,
@@ -65,14 +65,19 @@ export default async function OrganizationsPage() {
         }}>
           <div className="space-y-4">
             <div>
-		<label className="block text-sm font-medium mb-1">Kod (4 haneli)</label>
-             <input
+              <label className="block text-sm font-medium mb-1">Müşteri Adı</label>
+              <input name="name" type="text" required className="w-full border rounded px-3 py-2" placeholder="Örn: ABC Mobilya" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Kod (4 haneli)</label>
+              <input
                 name="code"
                 type="number"
                 min="1000"
                 max="9999"
                 className="w-full border rounded px-3 py-2"
                 placeholder="1001"
+              />
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Slug (opsiyonel)</label>
@@ -118,7 +123,7 @@ export default async function OrganizationsPage() {
           <ul className="space-y-2">
             {organizations.map((org) => (
               <li key={org.id} className="border p-3 rounded">
-                <strong>{org.name}</strong> — {org.slug}
+                <strong>{org.name}</strong> — {org.slug} {org.code && `(Kod: ${org.code})`}
                 <span className="text-sm text-gray-500 ml-2">
                   ({new Date(org.created_at).toLocaleDateString()})
                 </span>
