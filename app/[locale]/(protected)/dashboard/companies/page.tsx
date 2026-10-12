@@ -57,7 +57,7 @@ export default async function CompaniesPage() {
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-1">Organizasyon</label>
-              <select name="organization_id" required className="w-full border rounded px-3 py-2">
+              <select name="organization_id" required className="w-full border rounded px-3 py-2 bg-default-50 text-default-900">
                 <option value="">Seçiniz</option>
                 {organizations?.map((org) => (
                   <option key={org.id} value={org.id}>
