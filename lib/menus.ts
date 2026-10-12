@@ -87,7 +87,7 @@ export function getMenuList(pathname: string, t: any): Group[] {
               children: [],
             },
             {
-              href: "/en/dashboard/companies",
+              href: "/dashboard/companies",
               label: "Companies",
               active: pathname === "/en/dashboard/companies",
               icon: "heroicons:building-office-2",
